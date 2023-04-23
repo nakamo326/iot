@@ -10,6 +10,8 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 echo "source <(kubectl completion bash)" >> /home/vagrant/.bashrc
 echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> /home/vagrant/.bashrc
 
+# prometheus, grafanaインストール中にメトリクスサーバーがないみたいな怒られ方するので、
+# shellで起動確認できないか検討中、まだ上手く動かないはず
 # wait metrics-server up
 ret=1
 while [ "$ret" -ne 0 ]
@@ -30,7 +32,6 @@ done
 # helm install prometheus prometheus-community/prometheus
 
 # # install grafana
-
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
-helm install grafana grafana/grafana -f /vagrant/k8s/grafana.yaml
+# helm repo add grafana https://grafana.github.io/helm-charts
+# helm repo update
+# helm install grafana grafana/grafana -f /vagrant/k8s/grafana.yaml
