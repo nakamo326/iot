@@ -3,4 +3,4 @@ server:
     enabled: true
     ingressClassName: traefik
     hosts:
-      - app3.com
+      - app1.com
