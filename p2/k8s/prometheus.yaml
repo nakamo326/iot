@@ -1,0 +1,6 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - app3.com
