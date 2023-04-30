@@ -2,7 +2,7 @@ CLUSTER_NAME = iot
 
 # make cluster. if there's already, delete current cluster
 all: del
-	k3d cluster create $(CLUSTER_NAME)
+	k3d cluster create $(CLUSTER_NAME) -p "80:80@loadbalancer"
 
 # delete cluster.
 del:
@@ -14,5 +14,9 @@ del:
 
 # upgrade helm chart.
 # up:
+
+# temp TODO: delete
+helm:
+	helm install prometheus prometheus-community/prometheus -f k8s/prometheus.yaml
 
 .PHONY: all del install up
