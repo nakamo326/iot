@@ -8,6 +8,10 @@ all: del
 del:
 	k3d cluster delete $(CLUSTER_NAME)
 
+# install requerements.
+init:
+	./scripts/init.sh
+
 # install helm chart.
 # install:
 
@@ -23,4 +27,4 @@ helm:
 wait_metrics:
 	./scripts/wait.sh
 
-.PHONY: all del install up wait_metrics
+.PHONY: all del init helm wait_metrics
