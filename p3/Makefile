@@ -16,11 +16,12 @@ init:
 helm: wait_metrics
 	helm dependency build ./app
 	helm install app ./app
-	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode; echo
+	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode > grafana_password
 
 # upgrade helm chart.
 helm_up:
-	helm upgrate app ./app
+	helm upgrade app ./app
+	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode > grafana_password
 
 helm_del:
 	helm delete app
