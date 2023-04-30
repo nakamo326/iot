@@ -20,3 +20,13 @@ grafana:
       - name: Prometheus
         type: prometheus
         url: http://app-prometheus-server
+mastodon:
+  adminEmail: admin@admin.com
+  adminPassword: "password"
+  postgresql:
+    auth:
+      password: "hoge"
+  apache:
+    ingress:
+      enabled: true
+      hostname: "app3.com"

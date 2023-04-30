@@ -13,4 +13,5 @@ rm -rf linux-amd64 helm-v3.11.2-linux-amd64.tar.gz
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
+helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update

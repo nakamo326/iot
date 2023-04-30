@@ -8,5 +8,8 @@ dependencies:
 - name: cadvisor
   repository: https://ckotzbauer.github.io/helm-charts
   version: 2.2.4
-digest: sha256:f496b41451626544a6ff9c453167f319c25bd4b69caec8c5a7eeef7c69ea5ba3
-generated: "2023-04-30T23:22:59.021233491+09:00"
+- name: mastodon
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 1.2.0
+digest: sha256:0b66389fba9041d7051aba0d2b671dc85fd49de9b6cf94b5747cc3f3afee3fcb
+generated: "2023-05-01T00:59:15.818205071+09:00"
