@@ -30,3 +30,6 @@ dependencies:
   - name: grafana
     version: "6.56.1"
     repository: "https://grafana.github.io/helm-charts"
+  - name: cadvisor
+    version: "2.2.4"
+    repository: "https://ckotzbauer.github.io/helm-charts"

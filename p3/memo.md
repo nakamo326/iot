@@ -4,3 +4,9 @@
 3. `kubectl get all -n kube-system`で、システムリソースを確認（k3sと多分一緒
 4. /etc/hostsに`127.0.0.1 app1.com`を追加
 5. app1.comでPrometheusのWeb UIが表示されることを確認
+
+### memo
+cAdvisorポートフォワード
+```
+kubectl port-forward pod/`kubectl get pod -l app=cadvisor -o jsonpath="{.items[0].metadata.name}"` 8080:8080
+```
