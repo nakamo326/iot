@@ -19,4 +19,8 @@ del:
 helm:
 	helm install prometheus prometheus-community/prometheus -f k8s/prometheus.yaml
 
-.PHONY: all del install up
+# wait metrics-server
+wait_metrics:
+	./scripts/wait.sh
+
+.PHONY: all del install up wait_metrics
