@@ -13,17 +13,19 @@ init:
 	./scripts/init.sh
 
 # install helm chart.
-# install:
-
+helm: wait_metrics
+	helm dependency build ./app
+	helm install app ./app
+	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode; echo
 
 # upgrade helm chart.
-# up:
+helm_up:
+	helm upgrate app ./app
 
-# temp TODO: delete
-helm:
-	helm install prometheus prometheus-community/prometheus -f k8s/prometheus.yaml
+helm_del:
+	helm delete app
 
-# wait metrics-server
+# wait metrics-server.
 wait_metrics:
 	./scripts/wait.sh
 
