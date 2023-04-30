@@ -7,4 +7,5 @@
 # End of section
 ```
 
-[prometheusのvalue.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus/values.yaml)
+[prometheusのvalues.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus/values.yaml)
+[grafanaのvalues.yaml](https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml)
