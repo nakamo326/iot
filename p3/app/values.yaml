@@ -1,0 +1,15 @@
+prometheus:
+  server:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - "app1.com"
+  alertmanager:
+    enabled: false
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "app2.com"
