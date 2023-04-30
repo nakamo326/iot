@@ -13,3 +13,10 @@ grafana:
     ingressClassName: traefik
     hosts:
       - "app2.com"
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://app-prometheus-server

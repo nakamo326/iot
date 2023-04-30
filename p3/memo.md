@@ -10,3 +10,11 @@ cAdvisorポートフォワード
 ```
 kubectl port-forward pod/`kubectl get pod -l app=cadvisor -o jsonpath="{.items[0].metadata.name}"` 8080:8080
 ```
+
+grafana password
+```
+kubectl get secret app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode; echo
+```
+
+- [prometheusのvalues.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus/values.yaml)
+- [grafanaのvalues.yaml](https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml)
