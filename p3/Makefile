@@ -1,16 +1,21 @@
 CLUSTER_NAME = iot
 
-# make cluster. if there's already, delete current cluster
-all: del
-	k3d cluster create $(CLUSTER_NAME) -p "80:80@loadbalancer"
-
-# delete cluster.
-del:
-	k3d cluster delete $(CLUSTER_NAME)
+all:
+	make init
+	make k3d
+	make helm
 
 # install requerements.
 init:
 	./scripts/init.sh
+
+# make cluster. if there's already, delete current cluster
+k3d: k3d_del
+	k3d cluster create $(CLUSTER_NAME) -p "80:80@loadbalancer"
+
+# delete cluster.
+k3d_del:
+	k3d cluster delete $(CLUSTER_NAME)
 
 # install helm chart.
 helm: wait_metrics
@@ -30,4 +35,4 @@ helm_del:
 wait_metrics:
 	./scripts/wait.sh
 
-.PHONY: all del init helm wait_metrics
+.PHONY: all init k3d k3d_del helm helm_up helm_del wait_metrics
