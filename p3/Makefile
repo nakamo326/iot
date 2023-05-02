@@ -19,14 +19,13 @@ k3d_del:
 
 # install helm chart.
 helm: wait_metrics
-	helm dependency build ../helm/app
-	helm install app ../helm/app --timeout 15m
-	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode > grafana_password
+	helm install argocd argo/argo-cd -f ./k8s/argocd.yaml
+	kubectl -n default get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
 
 # upgrade helm chart.
 helm_up:
-	helm upgrade app ../helm/app
-	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode > grafana_password
+	helm upgrade argocd argo/argo-cd -f ./k8s/argocd.yaml
+	kubectl -n default get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
 
 helm_del:
 	helm delete app

@@ -1,0 +1,10 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "argocd.dev"
+configs:
+  params:
+    server.insecure: true
+    # server.rootpath: ''
