@@ -18,14 +18,3 @@ kubectl get secret app-grafana -o jsonpath="{.data.admin-password}" | base64 --d
 
 - [prometheusのvalues.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus/values.yaml)
 - [grafanaのvalues.yaml](https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml)
-
-### Github Apps
-1. https://github.com/settings/apps からNew Github App
-2. Repository PermissionsのContentsにRead-Onlyを設定
-3. Create Github App
-4. App IDを控える
-5. Generate a private key
-6. 左のメニューからInstall App
-7. Argo CDからアクセスしたいリポジトリを選択してインストール
-8. URLのInstallation IDを控える
-9. Argo CDのSettingsからCONNECT REPO、VIA GITHUB APPを選択して控えてID,keyを入力する

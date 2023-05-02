@@ -1,0 +1,21 @@
+# namespace dev
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: iot-p3
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/nakamo326/iot'
+    path: helm/simple_app
+    targetRevision: 10-argo-cdの導入
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
