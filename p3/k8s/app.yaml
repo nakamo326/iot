@@ -9,6 +9,7 @@ spec:
   source:
     repoURL: 'https://github.com/nakamo326/iot'
     path: helm/simple_app
+    # TODO: fix
     targetRevision: 10-argo-cdの導入
   destination:
     server: 'https://kubernetes.default.svc'
