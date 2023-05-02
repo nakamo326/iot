@@ -3,7 +3,7 @@ CLUSTER_NAME = iot
 all:
 	make init
 	make k3d
-	make helm
+	make argocd
 
 # install requerements.
 init:
