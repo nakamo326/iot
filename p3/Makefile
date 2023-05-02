@@ -19,13 +19,13 @@ k3d_del:
 
 # install helm chart.
 helm: wait_metrics
-	helm dependency build ./app
-	helm install app ./app --timeout 15m
+	helm dependency build ../helm/app
+	helm install app ../helm/app --timeout 15m
 	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode > grafana_password
 
 # upgrade helm chart.
 helm_up:
-	helm upgrade app ./app
+	helm upgrade app ../helm/app
 	kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode > grafana_password
 
 helm_del:
