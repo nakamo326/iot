@@ -1,0 +1,21 @@
+# namespace dev
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: iot-p3
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/nakamo326/ynakamot-iot-app'
+    path: simple_app
+    targetRevision: v1
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
