@@ -4,6 +4,7 @@ metadata:
   name: nginx-deployment
   labels:
     app: nginx
+    chart.version: {{ .Chart.Version }}
 spec:
   replicas: 3
   selector:

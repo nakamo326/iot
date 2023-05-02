@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: simple-app-ingress
   labels:
-    test.label: {{ .Values.label }}
+    chart.version: {{ .Chart.Version }}
 spec:
   ingressClassName: traefik
   rules:
