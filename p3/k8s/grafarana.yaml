@@ -1,5 +1,0 @@
-ingress:
-  enabled: true
-  ingressClassName: traefik
-  hosts:
-    - "app2.com"

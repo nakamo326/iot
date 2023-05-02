@@ -1,8 +1,0 @@
-server:
-  ingress:
-    enabled: true
-    ingressClassName: traefik
-    hosts:
-      - app1.com
-alertmanager:
-  enabled: false
