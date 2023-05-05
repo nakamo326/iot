@@ -2,14 +2,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: iot-p3
+  name: iot-bonus
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/nakamo326/ynakamot-iot-app'
+    # gitlabで作成したリポジトリのURLに書き換える
+    repoURL: 'http://gitlab.iot.com/gitlab-instance-fd210447/iot.git'
     path: simple_app
-    targetRevision: v1
+    targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: dev

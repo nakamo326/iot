@@ -20,7 +20,6 @@ k3d_del:
 # install argocd and application.
 argocd: wait_metrics
 	helm install -n argocd --create-namespace argocd argo/argo-cd -f ./k8s/argocd.yaml
-	kubectl apply -n argocd -f k8s/app.yaml
 	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
 
 gitlab: wait_metrics
