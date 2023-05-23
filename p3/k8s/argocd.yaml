@@ -1,0 +1,12 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "iot-argocd.com"
+configs:
+  params:
+    server.insecure: true
+    # server.rootpath: ''
+  cm:
+    timeout.reconciliation: 30s
