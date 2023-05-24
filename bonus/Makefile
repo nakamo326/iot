@@ -37,7 +37,7 @@ gitlab: wait_metrics
 		gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo
 
 add_hosts:
-	echo "127.0.0.1 iot.com\n127.0.0.1 gitlab.iot.com\n127.0.0.1 registry.iot.com\n127.0.0.1 minio.iot.com\n127.0.0.1 pages.iot.com" >> /etc/hosts
+	echo "127.0.0.1 iot.com\n127.0.0.1 gitlab.iot.com\n127.0.0.1 registry.iot.com\n127.0.0.1 minio.iot.com\n127.0.0.1 pages.iot.com\n127.0.0.1 iot-argocd.com" >> /etc/hosts
 
 delete_hosts:
 	sed -i '/iot.com/d' /etc/hosts
