@@ -9,7 +9,6 @@ spec:
   source:
     repoURL: 'https://github.com/nakamo326/ynakamot-iot-app'
     path: simple_app
-    targetRevision: v1
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: dev

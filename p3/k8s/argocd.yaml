@@ -8,3 +8,5 @@ configs:
   params:
     server.insecure: true
     # server.rootpath: ''
+  cm:
+    timeout.reconciliation: 30s
