@@ -8,9 +8,8 @@ spec:
   project: default
   source:
     # gitlabで作成したリポジトリのURLに書き換える
-    repoURL: 'http://gitlab.iot.com/gitlab-instance-fd210447/iot.git'
+    repoURL: 'http://gitlab-webservice-default.gitlab.svc.cluster.local:8080/gitlab-instance-fd210447/iot.git'
     path: simple_app
-    targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: dev

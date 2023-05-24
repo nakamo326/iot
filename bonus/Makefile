@@ -4,6 +4,7 @@ all:
 	make init
 	make k3d
 	make gitlab
+	make argocd
 
 # install requerements.
 init:
@@ -20,16 +21,20 @@ k3d_del:
 # install argocd and application.
 argocd: wait_metrics
 	helm install -n argocd --create-namespace argocd argo/argo-cd -f ./k8s/argocd.yaml
-	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
+	kubectl -n argocd wait \
+		--for condition=available --timeout=600s deployment/argocd-server
+	kubectl -n argocd get secret \
+		argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
+	kubectl apply -n argocd -f k8s/app.yaml
 
 gitlab: wait_metrics
 	helm upgrade --install \
-	-n gitlab --create-namespace \
-	gitlab gitlab/gitlab \
-	--timeout 600s \
-	-f ./k8s/gitlab.yaml
-	kubectl get secret -n gitlab \
-	gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo
+		-n gitlab --create-namespace \
+		gitlab gitlab/gitlab \
+		--timeout 600s \
+		-f ./k8s/gitlab.yaml
+	kubectl -n gitlab get secret \
+		gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo
 
 add_hosts:
 	echo "127.0.0.1 iot.com\n127.0.0.1 gitlab.iot.com\n127.0.0.1 registry.iot.com\n127.0.0.1 minio.iot.com\n127.0.0.1 pages.iot.com" >> /etc/hosts
