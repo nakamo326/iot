@@ -4,7 +4,6 @@ all:
 	make init
 	make k3d
 	make gitlab
-	make argocd
 
 # install requerements.
 init:
@@ -25,7 +24,12 @@ argocd: wait_metrics
 		--for condition=available --timeout=600s deployment/argocd-server
 	kubectl -n argocd get secret \
 		argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
+	kubectl apply -n argocd -f k8s/argocd-secret.yaml
 	kubectl apply -n argocd -f k8s/app.yaml
+
+reargocd:
+	kubectl delete namespace argocd
+	make argocd
 
 gitlab: wait_metrics
 	helm upgrade --install \
