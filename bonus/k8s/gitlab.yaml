@@ -36,3 +36,6 @@ prometheus:
     create: false
 gitlab-runner:
   install: false
+registry:
+  enabled: false
+
