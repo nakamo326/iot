@@ -24,6 +24,9 @@ argocd: wait_metrics
 		--for condition=available --timeout=600s deployment/argocd-server
 	kubectl -n argocd get secret \
 		argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
+	$(eval gitlab_pass := $(shell kubectl -n gitlab get secret \
+		gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode))
+	sed -i 's/password: .*$$/password: $(gitlab_pass)/g' k8s/argocd-secret.yaml
 	kubectl apply -n argocd -f k8s/argocd-secret.yaml
 	kubectl apply -n argocd -f k8s/app.yaml
 
