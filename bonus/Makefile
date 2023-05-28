@@ -38,9 +38,9 @@ gitlab: wait_metrics
 		gitlab gitlab/gitlab \
 		--timeout 600s \
 		-f ./k8s/gitlab.yaml
-	$(eval gitlab_pass := $(shell kubectl -n gitlab get secret \
-		gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode))
-	echo $(gitlab_pass) > gitlab_pass
+	echo\
+		$(shell kubectl -n gitlab get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode)\
+		> gitlab_pass
 
 add_hosts:
 	echo "127.0.0.1 iot.com\n127.0.0.1 gitlab.iot.com\n127.0.0.1 registry.iot.com\n127.0.0.1 minio.iot.com\n127.0.0.1 pages.iot.com\n127.0.0.1 iot-argocd.com" >> /etc/hosts
