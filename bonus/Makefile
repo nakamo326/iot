@@ -1,7 +1,7 @@
 CLUSTER_NAME = iot
 
 all:
-	make init
+	# make init
 	make k3d
 	make gitlab
 
@@ -24,6 +24,8 @@ argocd: wait_metrics
 		--for condition=available --timeout=600s deployment/argocd-server
 	kubectl -n argocd get secret \
 		argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
+
+app_deploy:
 	sed -i 's/password: .*$$/password: $(shell cat gitlab_pass)/g' k8s/argocd-secret.yaml
 	kubectl apply -n argocd -f k8s/argocd-secret.yaml
 	kubectl apply -n argocd -f k8s/app.yaml
@@ -51,4 +53,4 @@ delete_hosts:
 wait_metrics:
 	./scripts/wait.sh
 
-.PHONY: all init k3d k3d_del argocd gitlab add_hosts wait_metrics
+.PHONY: all init k3d k3d_del argocd gitlab add_hosts wait_metrics app_deploy
