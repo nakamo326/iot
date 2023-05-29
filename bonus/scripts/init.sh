@@ -13,6 +13,7 @@ echo -e "${grn}add helm repository.${nc}"
 helm repo add gitlab https://charts.gitlab.io
 helm repo update
 
+# TODO: 既にglabがインストールされている時スキップ
 # install gitlab cli
 echo -e "${grn}install gitlab command.${nc}"
 glab_version="1.29.4"
@@ -26,4 +27,4 @@ curl -OL https://gitlab.com/gitlab-org/cli/-/releases/v${glab_version}/downloads
 mkdir glab
 tar -zxvf glab_${glab_version}_${target}.tar.gz -C glab
 sudo mv glab/bin/glab /usr/local/bin/glab
-rm -rf glab
+rm -rf glab glab_${glab_version}_${target}.tar.gz
