@@ -27,13 +27,11 @@ global:
   kas:
     enabled: false
 certmanager:
-  rbac:
-    create: false
+  install: false
 nginx-ingress:
   enabled: false
 prometheus:
-  rbac:
-    create: false
+  install: false
 gitlab-runner:
   install: false
 registry:
