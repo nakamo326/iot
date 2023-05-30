@@ -1,9 +1,14 @@
 CLUSTER_NAME = iot
 
-all:
+f:
 	# make init
 	make k3d
 	make gitlab
+	make argocd
+
+s:
+	./scripts/make_gitlab_repo.sh
+	kubectl apply -n argocd -f k8s/app.yaml
 
 # install requerements.
 init:
@@ -25,11 +30,6 @@ argocd: wait_metrics
 	kubectl -n argocd get secret \
 		argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > argocd_pass
 
-app_deploy:
-	sed -i 's/password: .*$$/password: $(shell cat gitlab_pass)/g' k8s/argocd-secret.yaml
-	kubectl apply -n argocd -f k8s/argocd-secret.yaml
-	kubectl apply -n argocd -f k8s/app.yaml
-
 reargocd:
 	kubectl delete namespace argocd
 	make argocd
@@ -40,6 +40,7 @@ gitlab: wait_metrics
 		gitlab gitlab/gitlab \
 		--timeout 600s \
 		-f ./k8s/gitlab.yaml
+	kubectl wait -n gitlab --timeout=300s --for=condition=Ready pod -l app=webservice
 	kubectl -n gitlab get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode \
 		> gitlab_pass
 
