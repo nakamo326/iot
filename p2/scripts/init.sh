@@ -1,39 +1,35 @@
 #!/bin/bash
 
-# instal k3s
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--flannel-iface=enp0s8" sh -
-# vagrnt userからクラスターにアクセスできるようにreadの権限を付与
-sudo chmod 644 /etc/rancher/k3s/k3s.yaml
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+# ==== Color definition ==== #
+ylw="\033[33m"
+grn="\033[32m"
+blu="\033[34m"
+mgn="\033[35m"
+cyn="\033[36m"
+nc="\033[m"
 
-
-# source completion
-echo "source <(kubectl completion bash)" >> /home/vagrant/.bashrc
-echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> /home/vagrant/.bashrc
-
-# prometheus, grafanaインストール中にメトリクスサーバーがないみたいな怒られ方するので、
-# shellで起動確認できないか検討中、まだ上手く動かないはず
-# wait metrics-server up
-ret=1
-while [ "$ret" -ne 0 ]
-do
-sleep 1
-kubectl -n kube-system wait --for=condition=available deployment/metrics-server
-ret=$?
-done
+# install k3d, please input your password
+echo -e "${grn}install k3d command.${nc}"
+curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 # install helm
-curl -O https://get.helm.sh/helm-v3.11.2-linux-amd64.tar.gz 
-tar -zxvf helm-v3.11.2-linux-amd64.tar.gz
-mv linux-amd64/helm /usr/local/bin/helm
+echo -e "${grn}install helm command.${nc}"
+helm_version="v3.11.3"
+if [ `uname -m` = "arm64" ] ;then
+# arm64の時はapple silicon決め打ち
+target="darwin-arm64"
+else
+target="linux-amd64"
+fi
+curl -O https://get.helm.sh/helm-${helm_version}-${target}.tar.gz
+tar -zxvf helm-${helm_version}-${target}.tar.gz
+sudo mv ${target}/helm /usr/local/bin/helm
+rm -rf ${target} helm-${helm_version}-${target}.tar.gz
 
-# install prometheus
+# install repo
+echo -e "${grn}add helm repository.${nc}"
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-helm install prometheus prometheus-community/prometheus -f /vagrant/k8s/prometheus.yaml
-
-# install grafana
 helm repo add grafana https://grafana.github.io/helm-charts
+helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
+helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
-helm install grafana grafana/grafana -f /vagrant/k8s/grafana.yaml
-kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode; echo
