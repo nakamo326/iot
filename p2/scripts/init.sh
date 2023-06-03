@@ -8,9 +8,26 @@ mgn="\033[35m"
 cyn="\033[36m"
 nc="\033[m"
 
-# install k3d, please input your password
-echo -e "${grn}install k3d command.${nc}"
-curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+# instal k3s
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--flannel-iface=enp0s8" sh -
+# vagrnt userからクラスターにアクセスできるようにreadの権限を付与
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+
+# source completion
+echo "source <(kubectl completion bash)" >> /home/vagrant/.bashrc
+echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> /home/vagrant/.bashrc
+
+
+echo "waiting for metrics-server to be ready"
+while :; do
+kubectl wait -n kube-system --timeout=90s --for=condition=Ready pod -l k8s-app=metrics-server
+if [ $? = 0 ];then
+  break
+fi
+sleep 1
+done
+echo "done waiting"
 
 # install helm
 echo -e "${grn}install helm command.${nc}"
@@ -33,3 +50,8 @@ helm repo add grafana https://grafana.github.io/helm-charts
 helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
+
+# install app
+helm dependency build /vagrant/helm/app
+helm install app /vagrant/helm/app --timeout 15m
+kubectl get secret --namespace default app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode > /vagrant/helm/grafana_password
