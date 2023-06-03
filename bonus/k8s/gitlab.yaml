@@ -1,0 +1,39 @@
+global:
+  edition: ce
+  hosts:
+    domain: iot.com
+    https: false
+    gitlab:
+      name: gitlab.iot.com
+      https: false
+    registry:
+      name: registry.iot.com
+      https: false
+    minio:
+      name: minio.iot.com
+      https: false
+    pages:
+      name: pages.iot.com
+      https: false
+    ssh: gitlab.iot.com
+  ingress:
+    enabled: true
+    apiVersion: "networking.k8s.io/v1"
+    configureCertmanager: false
+    provider: traefik
+    class: traefik
+    path: /
+    pathType: Prefix
+  kas:
+    enabled: false
+certmanager:
+  install: false
+nginx-ingress:
+  enabled: false
+prometheus:
+  install: false
+gitlab-runner:
+  install: false
+registry:
+  enabled: false
+

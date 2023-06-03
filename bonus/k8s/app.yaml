@@ -1,0 +1,21 @@
+# namespace dev
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: iot-bonus
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # gitlabで作成したリポジトリのURLに書き換える
+    repoURL: 'http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/root/iot.git'
+    path: simple_app
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
