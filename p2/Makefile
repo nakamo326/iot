@@ -3,6 +3,12 @@ CLUSTER_NAME = iot
 all:
 	vagrant up
 
+ssh:
+	vagrant ssh yokawadaS
+
+del:
+	vagrant destroy -f
+
 # make cluster. if there's already, delete current cluster
 k3d: k3d_del
 	k3d cluster create $(CLUSTER_NAME) -p "80:80@loadbalancer"
@@ -20,4 +26,4 @@ app:
 add_hosts:
 	echo "192.168.56.110 app1.com\n192.168.56.110 app2.com\n" >> /etc/hosts
 
-.PHONY: all init k3d k3d_del app add_hosts
+.PHONY: all ssh del init k3d k3d_del app add_hosts
