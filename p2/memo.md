@@ -11,6 +11,7 @@ Windowsマシンのhostsファイルは"C:\Windows\System32\drivers\etc"にあ�
 ### app2のレプリカ
 `kubectl get pods`でもpodが3つ作られていることは確認できる。
 ブラウザ、curlなどでリクエストするとラウンドロビンでロードバランシングされているのが分かる。
+(`kubectl get deployment`がより直接的)
 
 PowerShellはgrepない。。。（みたいなやつはある
 curl -H 'Host:app2.com' http://192.168.56.110  | Select-String -Pattern "app2"
